@@ -1,0 +1,103 @@
+[ 
+ {:db/doc "Food Name (USDA Description)"
+ :db/id #db/id[:db.part/db]
+ :db/ident :food/name
+ :db/valueType :db.type/string
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db}
+
+ {:db/doc "USDA ID Number"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food/id
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "USDA tag"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food/tag
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/many
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "USDA manufacturer"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food/manufacturer
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ ;; should group be enumerated?
+ {:db/doc "food group"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food/group
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "food->portion ref"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food/portion
+  :db/isComponent true ;; ** this is important!!!
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db.install/_attribute :db.part/db}
+
+ ;; portions are 'components' of foods.  see http://blog.datomic.com/2013/06/component-entities.html
+ {:db/doc "portion amount"
+  :db/id #db/id[:db.part/db]
+  :db/ident :portion/amount
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "portion unit"
+  :db/id #db/id[:db.part/db]
+  :db/ident :portion/unit
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "portion grams"
+  :db/id #db/id[:db.part/db]
+  :db/ident :portion/grams
+  :db/valueType :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "food->food_nutrient ref"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food/nutrient
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "A food nutrient name"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food_nutrient/description
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+ {:db/doc "A food nutrient unit"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food_nutrient/units
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+  {:db/doc "A food nutrient group" ;;enum?
+  :db/id #db/id[:db.part/db]
+  :db/ident :food_nutrient/group
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+
+  {:db/doc "A food nutrient value"
+  :db/id #db/id[:db.part/db]
+  :db/ident :food_nutrient/value
+  :db/valueType :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db.install/_attribute :db.part/db}
+ ]
