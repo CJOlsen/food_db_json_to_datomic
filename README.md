@@ -1,14 +1,17 @@
-# usda_dbfront
+# food_db_json_to_datomic
 
-A Clojure library designed to explore the migration of data from JSON into
+A Clojure project designed to explore the migration of data from JSON into
 Datomic, also includes some very basic querying of the Datomic database.
 
 The database that gets created exists in your computer's memory and doesn't
 persist, luckily takes less than two minutes for the migration to occur.
 
 src/*/json_to_datomic.clj handles the actual migration
+
 src/*/dblayer.clj has some samlple queries on the new database
+
 resources/foods-2011-10-03.json is the original json database
+
 resources/datomic-schema.dtm defines the schema for the new database
 
 ## Usage
