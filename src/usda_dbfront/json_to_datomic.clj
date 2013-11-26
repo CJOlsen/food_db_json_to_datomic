@@ -45,8 +45,9 @@
 ;; (count all-json)
 ;; => 6636
 
-;; functions for transferring from json --> datomic
+;; functions for transferring from json --> datomic (see notes below)
 (defn add-single
+  ;; t-map == datomic transaction-map, j-item == json item
   [t-map j-item old-name new-name] ;; old-name and new-name == keywords
   (let [temp (old-name j-item)]
     (if (= 0 (count temp))
@@ -128,15 +129,15 @@
 
 
 ;; A few notes on (make-transaction):
-;; Each food in the database get one loop which is defined by make-transaction.
-;; In that loop a Datomic transaction is built from scratch, it's vector of
+;; Each food in the database gets one loop which is defined by make-transaction.
+;; In that loop a Datomic transaction is built from scratch, it's a vector of
 ;; hash-maps with corresponding temp-id's that let Datomic know how the 
 ;; different entities are related to eachother.  
 ;; In this loop, the singular attributes are picked up first from json, each is
 ;; added to the first hash-map.  Then the nutrients and portions are picked up,
 ;; portion numbers vary (and I suspect nutrients do too but either way I've 
 ;; assumed that they do).  The nutrients and the portions get their own subloops
-;; that go through  however many of each are defined in the json db.  
+;; that go through however many of each are defined in the json db.  
 ;; The temp-id's start over at the end of each loop of make-transaction because
 ;; they are converted to permanent id's when the transaction is run (which 
 ;; means we're running 6636 unique transactions instead of building one big 
