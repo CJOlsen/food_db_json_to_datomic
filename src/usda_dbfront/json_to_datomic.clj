@@ -45,8 +45,10 @@
 ;; (count all-json)
 ;; => 6636
 
-;; functions for transferring from json --> datomic (see notes below)
+;; functions for transferring from json --> datomic
+;; ** see notes on (make-transaction) below before continuing **
 (defn add-single
+  "Add one item to the new datomic transaction"
   ;; t-map == datomic transaction-map, j-item == json item
   [t-map j-item old-name new-name] ;; old-name and new-name == keywords
   (let [temp (old-name j-item)]
@@ -55,6 +57,7 @@
       (assoc t-map new-name temp))))
 
 (defn add-multiple
+  "Add multiple items to the new datomic transaction"
   [t-map j-item old-name new-name]
   (loop [temp (old-name j-item)
          t-map t-map]
@@ -82,6 +85,7 @@
   (add-multiple t-map j-item :tags :food/tag))
 
 (defn portion->dat
+  "Translate data from a JSON portion for the datomic transaction."
   [json-portion id-number]
   [{:db/id #db/id[:db.part/user -1000001]  ;; food temp-id = -1000001
     :food/portion (d/tempid :db.part/user id-number)}
@@ -102,6 +106,7 @@
                                                        portion-id))))))
 
 (defn nutrient->dat
+  "Translate data from a JSON nutrient for the datomic transaction."
   [json-nutrient id-number]
   [{:db/id #db/id[:db.part/user -1000001]
     :food/nutrient (d/tempid :db.part/user id-number)}
